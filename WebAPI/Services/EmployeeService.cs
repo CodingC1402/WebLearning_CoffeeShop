@@ -27,7 +27,7 @@ public class EmployeeService : Service<EmployeeRepo, Employee>
         return await Repository.FindById(id);
     }
 
-    public async Task<Employee> AddEmployee(Employee employee) {
+    public async Task<Employee?> AddEmployee(Employee employee) {
         var transaction = await Repository.StartTransaction();
         try
         {
@@ -37,9 +37,10 @@ public class EmployeeService : Service<EmployeeRepo, Employee>
 
             return employee;
         }
-        finally
+        catch (Exception)
         {
             await transaction.RollbackAsync();
+            return null;
         }
     }
 
@@ -56,9 +57,10 @@ public class EmployeeService : Service<EmployeeRepo, Employee>
 
             return employee;
         }
-        finally
+        catch (Exception)
         {
             await transaction.RollbackAsync();
+            return null;
         }
     }
     public async Task<Employee?> ClearResignEmployee(int id) {
@@ -74,9 +76,10 @@ public class EmployeeService : Service<EmployeeRepo, Employee>
 
             return employee;
         }
-        finally
+        catch (Exception)
         {            
             await transaction.RollbackAsync();
+            return null;
         }
     }
     public async Task SetManager(int id, int managerId) {
@@ -93,7 +96,7 @@ public class EmployeeService : Service<EmployeeRepo, Employee>
             await Repository.Save();            
             await transaction.CommitAsync();            
         }
-        finally
+        catch (Exception)
         {
             await transaction.RollbackAsync();
         }
@@ -107,7 +110,7 @@ public class EmployeeService : Service<EmployeeRepo, Employee>
             await Repository.AddManageEmployee(id, managedId);   
             await transaction.CommitAsync();
         }
-        finally
+        catch (Exception)
         {
             await transaction.RollbackAsync();
         }
@@ -127,9 +130,10 @@ public class EmployeeService : Service<EmployeeRepo, Employee>
 
             return employee;
         }
-        finally
+        catch (Exception)
         {
             await transaction.RollbackAsync();
+            return null;
         }
     }
 
