@@ -1184,19 +1184,19 @@
     ]
   },
   "packageFolders": {
-    "/home/cornpc/.nuget/packages/": {}
+    "C:\\Users\\nguyenphucpham\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/cornpc/Projects/WebLearning/WebAPI/WebAPI.csproj",
+      "projectUniqueName": "C:\\Users\\nguyenphucpham\\Documents\\GitHub\\WebLearning_CoffeeShop\\WebAPI\\WebAPI.csproj",
       "projectName": "WebAPI",
-      "projectPath": "/home/cornpc/Projects/WebLearning/WebAPI/WebAPI.csproj",
-      "packagesPath": "/home/cornpc/.nuget/packages/",
-      "outputPath": "/home/cornpc/Projects/WebLearning/WebAPI/obj/",
+      "projectPath": "C:\\Users\\nguyenphucpham\\Documents\\GitHub\\WebLearning_CoffeeShop\\WebAPI\\WebAPI.csproj",
+      "packagesPath": "C:\\Users\\nguyenphucpham\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\nguyenphucpham\\Documents\\GitHub\\WebLearning_CoffeeShop\\WebAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/cornpc/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\nguyenphucpham\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -1269,7 +1269,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.102/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   }

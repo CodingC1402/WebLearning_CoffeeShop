@@ -17,14 +17,17 @@ public class MorbulateService : Service
     private CoffeeRepo _coffees;
     private OrderRepo _orders;
 
+    private EmployeeService _employeeService;
+
     public MorbulateService(
         IHttpClientFactory httpClientFactory,
         CustomerRepo customers,
         EmployeeRepo employees,
         CoffeeRepo furniture,
-        OrderRepo orders)
-        => (s_httpClientFactory, _customers, _employees, _coffees, _orders)
-        = (httpClientFactory, customers, employees, furniture, orders);
+        OrderRepo orders,
+        EmployeeService employeeService)
+        => (s_httpClientFactory, _customers, _employees, _coffees, _orders, _employeeService)
+        = (httpClientFactory, customers, employees, furniture, orders, employeeService);
 
     public async Task DemorbulateCustomer() {
         await _customers.DeleteRange(e => true);
@@ -131,6 +134,7 @@ public class MorbulateService : Service
             s => $"{s}{(Random.Shared.Next() % 2 == 0 ? "female" : "male")}/", 
             number);
 
+        var employees = new List<Employee>();
         foreach (var info in infos)
         {
             var newEmployee = new Employee
@@ -140,13 +144,14 @@ public class MorbulateService : Service
                 PhoneNumber = info.Phone,
                 DOB = info.DOB,
                 Gender = info.Gender,
+                Password = info.Password
             };
             newEmployee.StartDate = newEmployee.StartDate.AddDays(Random.Shared.Next(-2000, 0));
 
-            _employees.Add(newEmployee);
+            employees.Add(newEmployee);
         }
 
-        await _employees.Save();
+        await _employeeService.AddEmployee(employees);
     }
 
 

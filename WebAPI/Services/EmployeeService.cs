@@ -27,10 +27,19 @@ public class EmployeeService : Service<EmployeeRepo, Employee>
         return await Repository.FindById(id);
     }
 
+    public async Task Login(string username, string password) {
+
+    }
+    public async Task Logout(string username) {
+        
+    }
+
     public async Task<Employee?> AddEmployee(Employee employee) {
         var transaction = await Repository.StartTransaction();
         try
         {
+            employee.Password = EncryptPassword(employee.Password);
+
             Repository.Add(employee);
             await Repository.Save();
             await transaction.CommitAsync();
@@ -38,6 +47,30 @@ public class EmployeeService : Service<EmployeeRepo, Employee>
             return employee;
         }
         catch (Exception)
+        {
+            await transaction.RollbackAsync();
+            return null;
+        }
+    }
+    public async Task<ICollection<Employee>?> AddEmployee(ICollection<Employee> employees) {
+        var transaction = await Repository.StartTransaction();
+        try
+        {
+            var tasks = new List<Task>();
+
+            foreach (var employee in employees) {
+                employee.Password = EncryptPassword(employee.Password);
+
+                Repository.Add(employee);
+                tasks.Add(Repository.Save());
+            }
+
+            await Task.WhenAll(tasks);
+            await transaction.CommitAsync();
+
+            return employees;
+        }
+        catch (System.Exception)
         {
             await transaction.RollbackAsync();
             return null;
@@ -137,7 +170,7 @@ public class EmployeeService : Service<EmployeeRepo, Employee>
         }
     }
 
-    protected string EncryptPassword(string password) {
+    public string EncryptPassword(string password) {
         return password;
     }
 }

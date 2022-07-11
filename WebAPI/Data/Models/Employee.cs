@@ -14,6 +14,8 @@ public class Employee : Person
     [Column(TypeName = "date")]
     public DateTime? ResignDate { get; set; }
     public int? ManagerId { get; set; }
+    public string Password { get; set; } = null!;
+    public string Role { get; set; } = null!;
 
     // Navigation Properties
     public ICollection<Employee>? ManagingEmployees { get; set; }
