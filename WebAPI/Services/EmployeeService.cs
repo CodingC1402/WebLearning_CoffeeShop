@@ -43,34 +43,22 @@ public class EmployeeService : Service<EmployeeRepo, Employee>
         return await Repository.FindById(id);
     }
 
-    public async Task<LoginReplyDto> Login(int id, string password) {
-        try {
-            var employee = await Repository.FindById(id);
-            var result = _passwordHasher.VerifyHashedPassword(employee, employee.Password, password);
-    
-            var reply = new LoginReplyDto();
-            switch (result)
-            {
-                case PasswordVerificationResult.Failed:
-                    throw new Exception();
-                case PasswordVerificationResult.SuccessRehashNeeded:
-                case PasswordVerificationResult.Success:
-                    (reply.AccessToken, reply.RefreshToken) = _tokenProvider.GenerateToken(employee);
-                    employee.RefreshToken = reply.RefreshToken;
-                    await Repository.Save();
-                    
-                    reply.AssignNotDefaultProperties(employee);
-                    break;
-            }
+    public async Task<Employee?> AddEmployee(Employee employee) {
+        var transaction = await Repository.StartTransaction();
+        try
+        {
+            Repository.Add(employee);
+            await Repository.Save();
+            await transaction.CommitAsync();
 
-            return reply;
-        } catch (Exception) {
-            throw new LoginFailedException();
+            return employee;
+        }
+        catch (Exception)
+        {
+            await transaction.RollbackAsync();
+            return null;
         }
     }
-    public async Task Logout(int id) {
-        var employee = await Repository.FindById(id);
-        if (employee == null) return;
 
         employee.RefreshToken = null;
     }
@@ -112,7 +100,41 @@ public class EmployeeService : Service<EmployeeRepo, Employee>
         return employee;
     }
     public async Task SetManagedEmployee(int id, int[] managedId, bool truncate) {
-        if (truncate) await Repository.RemoveAllManagedEmployee(id);
-        await Repository.AddManageEmployee(id, managedId);   
+        var transaction = await Repository.StartTransaction();
+        try
+        {
+            if (truncate) await Repository.RemoveAllManagedEmployee(id);
+            await Repository.AddManageEmployee(id, managedId);   
+            await transaction.CommitAsync();
+        }
+        catch (Exception)
+        {
+            await transaction.RollbackAsync();
+        }
+    }
+
+    public async Task<Employee?> UpdateEmployee(int id, EmployeeDto updatedEmployee) {
+        var transaction = await Repository.StartTransaction();
+        try
+        {
+            var employee = await Repository.FindById(id);
+            if (employee == null) throw new EmployeeNotFoundException();
+
+            employee.AssignNotDefaultProperties(updatedEmployee);
+
+            await Repository.Save();
+            await transaction.CommitAsync();
+
+            return employee;
+        }
+        catch (Exception)
+        {
+            await transaction.RollbackAsync();
+            return null;
+        }
+    }
+
+    protected string EncryptPassword(string password) {
+        return password;
     }
 }

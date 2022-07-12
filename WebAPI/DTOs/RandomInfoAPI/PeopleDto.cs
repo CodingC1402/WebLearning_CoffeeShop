@@ -13,7 +13,6 @@ public record PeopleDto(
     [property:JsonPropertyName("email_u")] string Email,
     [property:JsonPropertyName("phone_w")] string Phone,
     [property:JsonPropertyName("birth_data"), JsonConverter(typeof(DateTimeJsonConverter))] DateTime DOB,
-    [property:JsonPropertyName("pict"), JsonConverter(typeof(GenderPictJsonConverter)), Gender] string Gender,
-    [property:JsonPropertyName("password")] string Password
+    [property:JsonPropertyName("pict"), JsonConverter(typeof(GenderPictJsonConverter)), Gender] string Gender
     )
 {}

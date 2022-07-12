@@ -1527,11 +1527,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/cornpc/Projects/WebLearning_CoffeeShop/WebAPI/WebAPI.csproj",
+      "projectUniqueName": "/home/cornpc/Projects/WebLearning/WebAPI/WebAPI.csproj",
       "projectName": "WebAPI",
-      "projectPath": "/home/cornpc/Projects/WebLearning_CoffeeShop/WebAPI/WebAPI.csproj",
+      "projectPath": "/home/cornpc/Projects/WebLearning/WebAPI/WebAPI.csproj",
       "packagesPath": "/home/cornpc/.nuget/packages/",
-      "outputPath": "/home/cornpc/Projects/WebLearning_CoffeeShop/WebAPI/obj/",
+      "outputPath": "/home/cornpc/Projects/WebLearning/WebAPI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/cornpc/.nuget/NuGet/NuGet.Config"
