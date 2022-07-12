@@ -12,12 +12,12 @@ namespace WebAPI.Services;
 public class MorbulateService : Service
 {
     private readonly IHttpClientFactory s_httpClientFactory;
-    private CustomerRepo _customers;
-    private EmployeeRepo _employees;
-    private CoffeeRepo _coffees;
-    private OrderRepo _orders;
+    private readonly CustomerRepo _customers;
+    private readonly EmployeeRepo _employees;
+    private readonly CoffeeRepo _coffees;
+    private readonly OrderRepo _orders;
 
-    private EmployeeService _employeeService;
+    private readonly EmployeeService _employeeService;
 
     public MorbulateService(
         IHttpClientFactory httpClientFactory,
@@ -151,7 +151,7 @@ public class MorbulateService : Service
             employees.Add(newEmployee);
         }
 
-        await _employeeService.AddEmployee(employees);
+        await _employeeService.AddModel(employees);
     }
 
 

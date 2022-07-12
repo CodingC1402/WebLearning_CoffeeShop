@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nguyenphucpham\\Documents\\GitHub\\WebLearning_CoffeeShop\\WebAPI\\WebAPI.csproj": {}
+    "/home/cornpc/Projects/WebLearning_CoffeeShop/WebAPI/WebAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nguyenphucpham\\Documents\\GitHub\\WebLearning_CoffeeShop\\WebAPI\\WebAPI.csproj": {
+    "/home/cornpc/Projects/WebLearning_CoffeeShop/WebAPI/WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nguyenphucpham\\Documents\\GitHub\\WebLearning_CoffeeShop\\WebAPI\\WebAPI.csproj",
+        "projectUniqueName": "/home/cornpc/Projects/WebLearning_CoffeeShop/WebAPI/WebAPI.csproj",
         "projectName": "WebAPI",
-        "projectPath": "C:\\Users\\nguyenphucpham\\Documents\\GitHub\\WebLearning_CoffeeShop\\WebAPI\\WebAPI.csproj",
-        "packagesPath": "C:\\Users\\nguyenphucpham\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nguyenphucpham\\Documents\\GitHub\\WebLearning_CoffeeShop\\WebAPI\\obj\\",
+        "projectPath": "/home/cornpc/Projects/WebLearning_CoffeeShop/WebAPI/WebAPI.csproj",
+        "packagesPath": "/home/cornpc/.nuget/packages/",
+        "outputPath": "/home/cornpc/Projects/WebLearning_CoffeeShop/WebAPI/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nguyenphucpham\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/cornpc/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -38,9 +38,17 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
             "EFCore.CheckConstraints": {
               "target": "Package",
               "version": "[6.0.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.6, )"
             },
             "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
               "target": "Package",
@@ -87,7 +95,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.102/RuntimeIdentifierGraph.json"
         }
       }
     }

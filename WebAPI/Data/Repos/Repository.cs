@@ -21,7 +21,7 @@ public class Repository<T> where T : Model
         => await DataSet.Where(predicate).ToListAsync();
     
     public virtual void Add(T entity) => DataSet.Add(entity);
-    public virtual void AddRange(params T[] entities) => DataSet.AddRange();
+    public virtual void AddRange(params T[] entities) => DataSet.AddRange(entities);
 
     public virtual void Update(T entity) => DataSet.Update(entity);
     public virtual async Task UpdateRange(Expression<Func<T, bool>> predicate) => DataSet.UpdateRange(await FindBy(predicate));

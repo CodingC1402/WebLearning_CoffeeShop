@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using WebAPI.Data.Models;
@@ -16,34 +18,28 @@ public class EmployeeController : ApiControllerBase<EmployeeService>
     public EmployeeController(EmployeeService service) : base(service)
     {}
 
-    [HttpGet]
-    public async Task<IActionResult> GetEmployees([FromQuery] int? id) {
-        if (id == null) {
-            return Ok(await Service.GetAllEmployee());
-        } else {
-            return Ok(await Service.GetEmployee(id.Value));
-        }
+    [HttpGet("{id:int}")]
+    [Authorize]
+    [ProducesErrorResponseType(typeof(NotFoundResult))]
+    public async Task<IActionResult> GetEmployees([FromRoute] int id) {
+        return Ok(await Service.GetEmployee(id));
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> AddEmployee([FromBody] Employee employee) {
-        return Ok(await Service.AddEmployee(employee));
+        await Service.AddModel(employee);
+        return Ok(employee);
     }
 
-    [HttpPut]
-    public async Task<IActionResult> UpdateEmployee([FromQuery] int id, [FromBody] EmployeeDto employee) {
-        return Ok(await Service.UpdateEmployee(id, employee));
-    }
-
-    [HttpPut("manager")]
-    public async Task<IActionResult> SetManager([FromQuery] int id, [FromQuery] int managerId) {
-        await Service.SetManager(id, managerId);
-        return Ok();
-    }
-
-    [HttpPut("managed")]
-    public async Task<IActionResult> SetManaged([FromQuery] int id, [FromBody] int[] managedId, [FromQuery] bool truncated = false) {
-        await Service.SetManagedEmployee(id, managedId, truncated);
-        return Ok();
+    [HttpPut("{id:int}")]
+    [Authorize]
+    public async Task<IActionResult> UpdateEmployee([FromRoute] int id, [FromBody] EmployeeDto employee) {
+        try {
+            await Service.UpdateModel(id, employee);
+            return Ok(employee);
+        } catch (InvalidOperationException) {
+            return NotFound("Can't update employee with id " + id);
+        }
     }
 }
