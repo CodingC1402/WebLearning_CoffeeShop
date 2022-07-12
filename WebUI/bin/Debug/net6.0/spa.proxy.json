@@ -1,8 +1,0 @@
-{
-"SpaProxyServer": {
-"ServerUrl": "https://localhost:44422",
-"LaunchCommand": "npm start",
-"WorkingDirectory": "/home/cornpc/Projects/WebLearning_CoffeeShop/WebUI/ClientApp/",
-"MaxTimeoutInSeconds": "120"
-}
-}
