@@ -28,7 +28,7 @@ public class EmployeeController : ApiControllerBase<EmployeeService>
     [HttpPost]
     [Authorize]
     public async Task<IActionResult> AddEmployee([FromBody] Employee employee) {
-        await Service.AddModel(employee);
+        await Service.AddEmployee(employee);
         return Ok(employee);
     }
 
@@ -36,7 +36,7 @@ public class EmployeeController : ApiControllerBase<EmployeeService>
     [Authorize]
     public async Task<IActionResult> UpdateEmployee([FromRoute] int id, [FromBody] EmployeeDto employee) {
         try {
-            await Service.UpdateModel(id, employee);
+            await Service.UpdateEmployee(id, employee);
             return Ok(employee);
         } catch (InvalidOperationException) {
             return NotFound("Can't update employee with id " + id);

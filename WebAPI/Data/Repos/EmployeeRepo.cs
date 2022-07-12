@@ -11,9 +11,7 @@ namespace WebAPI.Data.Repos;
 
 public class EmployeeRepo : Repository<Employee>
 {
-    private IPasswordHasher<Employee> _passwordHasher;
-    public EmployeeRepo(DbContext dbContext, IPasswordHasher<Employee> passwordHasher) : base(dbContext)
-        => _passwordHasher = passwordHasher;
+    public EmployeeRepo(DbContext dbContext) : base(dbContext) {}
 
     public async Task<Employee> GetRandomEmployee() {
         int count = await DataSet.CountAsync();

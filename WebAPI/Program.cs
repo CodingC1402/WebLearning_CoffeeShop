@@ -8,7 +8,6 @@ using WebAPI.Controllers;
 using WebAPI.Data;
 using WebAPI.Data.Models;
 using WebAPI.Data.Repos;
-using WebAPI.Security;
 using WebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,8 +17,6 @@ var config = builder.Configuration;
 builder.Services.AddControllers().AddNewtonsoftJson().Services
     .AddDbContext<DbContext, ShopContext>()
     .AddHttpClient()
-    .AddScoped<IPasswordHasher<Employee>, BCryptPasswordHasher>()
-    .AddScoped<IJwtTokenProvider, JwtTokenProvider>()
 
 // Add repositories to the container.
     .AddScoped<OrderRepo>()

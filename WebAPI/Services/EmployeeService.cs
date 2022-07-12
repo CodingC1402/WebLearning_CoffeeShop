@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using WebAPI.Data.Models;
 using WebAPI.Data.Repos;
 using WebAPI.DTOs.FrontEnd;
-using WebAPI.Security;
 using WebAPI.Utilities.Extensions;
 
 namespace WebAPI.Services;
@@ -26,14 +25,7 @@ public class EmployeeService : Service<EmployeeRepo, Employee>
         public RefreshTokenException() : base("Refresh token is invalid, please login again") { }
     }
 
-    private readonly IPasswordHasher<Employee> _passwordHasher;
-    private readonly IJwtTokenProvider _tokenProvider;
-
-    public EmployeeService(
-        EmployeeRepo repository, 
-        IPasswordHasher<Employee> passwordHasher, 
-        IJwtTokenProvider tokenProvider) : base(repository)
-        => (_passwordHasher, _tokenProvider) = (passwordHasher, tokenProvider);
+    public EmployeeService(EmployeeRepo repository) : base(repository) {}
 
     public async Task<IEnumerable<Employee>> GetAllEmployee() {
         return await Repository.FindAll();
@@ -57,28 +49,6 @@ public class EmployeeService : Service<EmployeeRepo, Employee>
         {
             await transaction.RollbackAsync();
             return null;
-        }
-    }
-
-        employee.RefreshToken = null;
-    }
-    public async Task<RefreshReplyDto> RefreshToken(string refreshToken) {
-        try {
-            var principal = _tokenProvider.GetPrincipal(refreshToken);
-            var employee = await Repository.FindById(principal.Id);
-            if (employee.RefreshToken != refreshToken) {
-                throw new Exception();
-            }
-
-            var refreshReplyDto = new RefreshReplyDto();
-            (refreshReplyDto.AccessToken, refreshReplyDto.RefreshToken) = _tokenProvider.GenerateToken(employee);
-            employee.RefreshToken = refreshReplyDto.RefreshToken;
-
-            await Repository.Save();
-
-            return refreshReplyDto;
-        } catch (Exception) {
-            throw new RefreshTokenException();
         }
     }
     public async Task<Employee?> ResignEmployee(int id) {
