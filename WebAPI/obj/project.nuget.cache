@@ -1,13 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "6x12yLELt3LmSrbaONQcvrjtPnO23Zu/sFXs9VJNF9KbmbObbKFLSrUdHF/UHlzWjPostOPPxfCyYWjUCxKWOA==",
+  "dgSpecHash": "UsOXe6XfBuucjkSMAW4zNVXLc6yUQxm30UfqA3fixaVTBnF9/loL+Uvn1uwXFr7vkpZn5n2/4M8zc+JD6vdO4g==",
   "success": true,
-  "projectFilePath": "/home/cornpc/Projects/WebLearning_CoffeeShop/WebAPI/WebAPI.csproj",
+  "projectFilePath": "/home/cornpc/Projects/WebLearning/WebAPI/WebAPI.csproj",
   "expectedPackageFiles": [
-    "/home/cornpc/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
     "/home/cornpc/.nuget/packages/efcore.checkconstraints/6.0.0/efcore.checkconstraints.6.0.0.nupkg.sha512",
     "/home/cornpc/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
-    "/home/cornpc/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/6.0.6/microsoft.aspnetcore.authentication.jwtbearer.6.0.6.nupkg.sha512",
     "/home/cornpc/.nuget/packages/microsoft.aspnetcore.jsonpatch/6.0.6/microsoft.aspnetcore.jsonpatch.6.0.6.nupkg.sha512",
     "/home/cornpc/.nuget/packages/microsoft.aspnetcore.mvc.newtonsoftjson/6.0.6/microsoft.aspnetcore.mvc.newtonsoftjson.6.0.6.nupkg.sha512",
     "/home/cornpc/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",
@@ -27,11 +25,6 @@
     "/home/cornpc/.nuget/packages/microsoft.extensions.logging.abstractions/6.0.0/microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
     "/home/cornpc/.nuget/packages/microsoft.extensions.options/6.0.0/microsoft.extensions.options.6.0.0.nupkg.sha512",
     "/home/cornpc/.nuget/packages/microsoft.extensions.primitives/6.0.0/microsoft.extensions.primitives.6.0.0.nupkg.sha512",
-    "/home/cornpc/.nuget/packages/microsoft.identitymodel.jsonwebtokens/6.10.0/microsoft.identitymodel.jsonwebtokens.6.10.0.nupkg.sha512",
-    "/home/cornpc/.nuget/packages/microsoft.identitymodel.logging/6.10.0/microsoft.identitymodel.logging.6.10.0.nupkg.sha512",
-    "/home/cornpc/.nuget/packages/microsoft.identitymodel.protocols/6.10.0/microsoft.identitymodel.protocols.6.10.0.nupkg.sha512",
-    "/home/cornpc/.nuget/packages/microsoft.identitymodel.protocols.openidconnect/6.10.0/microsoft.identitymodel.protocols.openidconnect.6.10.0.nupkg.sha512",
-    "/home/cornpc/.nuget/packages/microsoft.identitymodel.tokens/6.10.0/microsoft.identitymodel.tokens.6.10.0.nupkg.sha512",
     "/home/cornpc/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
     "/home/cornpc/.nuget/packages/mysqlconnector/2.1.2/mysqlconnector.2.1.2.nupkg.sha512",
     "/home/cornpc/.nuget/packages/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg.sha512",
@@ -43,9 +36,7 @@
     "/home/cornpc/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.2.3/swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512",
     "/home/cornpc/.nuget/packages/system.collections.immutable/6.0.0/system.collections.immutable.6.0.0.nupkg.sha512",
     "/home/cornpc/.nuget/packages/system.diagnostics.diagnosticsource/6.0.0/system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512",
-    "/home/cornpc/.nuget/packages/system.identitymodel.tokens.jwt/6.10.0/system.identitymodel.tokens.jwt.6.10.0.nupkg.sha512",
-    "/home/cornpc/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
-    "/home/cornpc/.nuget/packages/system.security.cryptography.cng/4.5.0/system.security.cryptography.cng.4.5.0.nupkg.sha512"
+    "/home/cornpc/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
   ],
   "logs": []
 }

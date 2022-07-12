@@ -20,8 +20,7 @@ public class Employee : Person
     public DateTime StartDate { get; set; } = DateTime.Today;
     [Column(TypeName = "date")]
     public DateTime? ResignDate { get; set; }
-    public int? ManagerId { get; set; }    public string Password { get; set; } = null!;
-    public RoleType Role { get; set; } = RoleType.Employee;
+    public int? ManagerId { get; set; }
 
     public string? RefreshToken { get; set; }
     // Navigation Properties
