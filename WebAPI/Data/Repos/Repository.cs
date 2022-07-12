@@ -30,14 +30,14 @@ public class Repository<T> where T : Model
     public virtual void Delete(T entity) => DataSet.Remove(entity);
     public virtual async Task DeleteRange(Expression<Func<T, bool>> predicate) => DataSet.RemoveRange(await FindBy(predicate));
     public virtual void DeleteRange(params T[] entities) => DataSet.RemoveRange(entities);
-    public virtual async Task<bool> DeleteById(int id) {
+    public virtual async Task<T?> DeleteById(int id) {
         var entity = await FindById(id);
         if (entity == null) {
-            return false;
+            return null;
         }
 
         DataSet.Remove(entity);
-        return true;
+        return entity;
     }
 
     public virtual async Task LoadCollection<C>(
