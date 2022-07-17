@@ -11,7 +11,7 @@ namespace WebAPI.Utilities.Converters
 {
     public class GenderPictJsonConverter : JsonConverter<string>
     {
-        private static readonly Regex s_regex = new Regex(@"[^0-9]+");
+        private static readonly Regex s_regex = new(@"[^0-9]+");
         public override string? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             Match match = s_regex.Match(reader.GetString() ?? "");

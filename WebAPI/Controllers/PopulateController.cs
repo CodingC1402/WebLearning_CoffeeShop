@@ -7,18 +7,22 @@ using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
+    [ApiController]
     [Route("[controller]")]
-    public class MorbulateController : ApiControllerBase<MorbulateService>
+    public class PopulateController : ControllerBase
     {
-        public MorbulateController(MorbulateService service) : base(service) 
-        {}
+        public PopulateService Service { get; init; }
+        public PopulateController(PopulateService service)
+        {
+            Service = service;
+        }
 
         [HttpPost("customer")]
         public async Task<IActionResult> PostCustomer([FromQuery] int count) {
             try
             {
-                await Service.MorbulateCustomer(count);
-                return Ok("Morbulate Successful");
+                await Service.PopulateCustomer(count);
+                return Ok("Populate Successful");
             }
             catch (Exception e)
             {
@@ -28,8 +32,8 @@ namespace WebAPI.Controllers
         [HttpDelete("customer")]
         public async Task<IActionResult> DeleteCustomer() {
             try {
-                await Service.DemorbulateCustomer();
-                return Ok("Demorbulated the customers");
+                await Service.DepopulateCustomer();
+                return Ok("Depopulated the customers");
             } catch (Exception e) {
                 return BadRequest(e.ToString());
             }
@@ -39,8 +43,8 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> PostEmployee([FromQuery] int count) {
             try
             {
-                await Service.MorbulateEmployees(count);
-                return Ok("Morbulate Successful");
+                await Service.PopulateEmployees(count);
+                return Ok("Populate Successful");
             } catch (Exception e) {
                 return BadRequest(e.ToString());
             }
@@ -48,8 +52,8 @@ namespace WebAPI.Controllers
         [HttpDelete("employee")]
         public async Task<IActionResult> DeleteEmployee() {
             try {
-                await Service.DemorbulateEmployee();
-                return Ok("Demorbulated the customers");
+                await Service.DepopulateEmployee();
+                return Ok("Depopulated the customers");
             } catch (Exception e) {
                 return BadRequest(e.ToString());
             }
@@ -58,8 +62,8 @@ namespace WebAPI.Controllers
         [HttpPost("coffee")]
         public async Task<IActionResult> PostCoffee([FromQuery] int count) {
             try {
-                await Service.MorbulateCoffee(count);
-                return Ok("Morbulate Successful");
+                await Service.PopulateCoffee(count);
+                return Ok("Populate Successful");
             } catch (Exception e) {
                 return BadRequest(e.ToString());
             }
@@ -67,8 +71,8 @@ namespace WebAPI.Controllers
         [HttpDelete("coffee")]
         public async Task<IActionResult> DeleteCoffee() {
             try {
-                await Service.DemorbulateCoffee();
-                return Ok("Demorbulated the coffees");
+                await Service.DepopulateCoffee();
+                return Ok("Depopulated the coffees");
             } catch (Exception e) {
                 return BadRequest(e.ToString());
             }
@@ -77,8 +81,8 @@ namespace WebAPI.Controllers
         [HttpPost("order")]
         public async Task<IActionResult> PostOrder([FromQuery] int count) {
             try {
-                await Service.MorbulateOrder(count);
-                return Ok("Morbulate Successful");
+                await Service.PopulateOrder(count);
+                return Ok("Populate Successful");
             } catch (Exception e) {
                 return BadRequest(e.ToString());
             }
@@ -86,8 +90,27 @@ namespace WebAPI.Controllers
         [HttpDelete("order")]
         public async Task<IActionResult> DeleteOrder() {
             try {
-                await Service.DemorbulateOrder();
-                return Ok("Demorbulated the orders");
+                await Service.DepopulateOrder();
+                return Ok("Depopulated the orders");
+            } catch (Exception e) {
+                return BadRequest(e.ToString());
+            }
+        }
+        
+        [HttpPost("shop")]
+        public async Task<IActionResult> PostShop([FromQuery] int count) {
+            try {
+                await Service.PopulateShop(count);
+                return Ok("Populate Successful");
+            } catch (Exception e) {
+                return BadRequest(e.ToString());
+            }
+        }
+        [HttpDelete("shop")]
+        public async Task<IActionResult> DeleteShop() {
+            try {
+                await Service.DepopulateShop();
+                return Ok("Depopulated the orders");
             } catch (Exception e) {
                 return BadRequest(e.ToString());
             }
