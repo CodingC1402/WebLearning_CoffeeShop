@@ -16,7 +16,6 @@ public class GenderAttribute : ValidationAttribute
         ErrorMessage = errorMessage;
     }
     public override bool IsValid(object? value) {
-        string? gender = value as string;
-        return gender == null || s_valid.Contains(gender);
+        return value is not string gender || s_valid.Contains(gender);
     }
 }

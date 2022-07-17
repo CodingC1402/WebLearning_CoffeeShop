@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> PostCustomer([FromQuery] int count) {
             try
             {
-                await Service.MorbulateCustomer(count);
+                await Service.PopulateCustomer(count);
                 return Ok("Morbulate Successful");
             }
             catch (Exception e)
@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
         [HttpDelete("customer")]
         public async Task<IActionResult> DeleteCustomer() {
             try {
-                await Service.DemorbulateCustomer();
+                await Service.DepopulateCustomer();
                 return Ok("Demorbulated the customers");
             } catch (Exception e) {
                 return BadRequest(e.ToString());
@@ -39,7 +39,7 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> PostEmployee([FromQuery] int count) {
             try
             {
-                await Service.MorbulateEmployees(count);
+                await Service.PopulateEmployees(count);
                 return Ok("Morbulate Successful");
             } catch (Exception e) {
                 return BadRequest(e.ToString());
@@ -48,7 +48,7 @@ namespace WebAPI.Controllers
         [HttpDelete("employee")]
         public async Task<IActionResult> DeleteEmployee() {
             try {
-                await Service.DemorbulateEmployee();
+                await Service.DepopulateEmployee();
                 return Ok("Demorbulated the customers");
             } catch (Exception e) {
                 return BadRequest(e.ToString());
@@ -58,7 +58,7 @@ namespace WebAPI.Controllers
         [HttpPost("coffee")]
         public async Task<IActionResult> PostCoffee([FromQuery] int count) {
             try {
-                await Service.MorbulateCoffee(count);
+                await Service.PopulateCoffee(count);
                 return Ok("Morbulate Successful");
             } catch (Exception e) {
                 return BadRequest(e.ToString());
@@ -67,7 +67,7 @@ namespace WebAPI.Controllers
         [HttpDelete("coffee")]
         public async Task<IActionResult> DeleteCoffee() {
             try {
-                await Service.DemorbulateCoffee();
+                await Service.DepopulateCoffee();
                 return Ok("Demorbulated the coffees");
             } catch (Exception e) {
                 return BadRequest(e.ToString());
@@ -77,7 +77,7 @@ namespace WebAPI.Controllers
         [HttpPost("order")]
         public async Task<IActionResult> PostOrder([FromQuery] int count) {
             try {
-                await Service.MorbulateOrder(count);
+                await Service.PopulateOrder(count);
                 return Ok("Morbulate Successful");
             } catch (Exception e) {
                 return BadRequest(e.ToString());
@@ -86,7 +86,7 @@ namespace WebAPI.Controllers
         [HttpDelete("order")]
         public async Task<IActionResult> DeleteOrder() {
             try {
-                await Service.DemorbulateOrder();
+                await Service.DepopulateOrder();
                 return Ok("Demorbulated the orders");
             } catch (Exception e) {
                 return BadRequest(e.ToString());

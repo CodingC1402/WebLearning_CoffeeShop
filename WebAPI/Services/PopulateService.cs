@@ -19,11 +19,11 @@ public class PopulateService : Service
     public PopulateService(ShopContext context, IHttpClientFactory httpClientFactory)
         => (_context, _httpClientFactory) = (context, httpClientFactory);
 
-    public async Task DemorbulateCustomer() {
+    public async Task DepopulateCustomer() {
         await _context.Customers.RemoveAll();
         await _context.SaveChangesAsync();
     }
-    public async Task MorbulateCustomer(int number)
+    public async Task PopulateCustomer(int number)
     {
         var infos = await GenerateRandomInfosRange<PeopleDto>(
             "https://api.namefake.com/english-united-states/", 
@@ -49,12 +49,12 @@ public class PopulateService : Service
         await _context.SaveChangesAsync();
     }
 
-    public async Task DemorbulateCoffee()
+    public async Task DepopulateCoffee()
     {
         await _context.Coffees.RemoveAll();
         await _context.SaveChangesAsync();
     }
-    public async Task MorbulateCoffee(int number)
+    public async Task PopulateCoffee(int number)
     {
         var infos = await GenerateRandomInfosRange<CoffeeDto>(
             "https://random-data-api.com/api/coffee/random_coffee", 
@@ -78,12 +78,12 @@ public class PopulateService : Service
         await _context.SaveChangesAsync();
     }
 
-    public async Task DemorbulateOrder()
+    public async Task DepopulateOrder()
     {
         await _context.Orders.RemoveAll();
         await _context.SaveChangesAsync();
     }
-    public async Task MorbulateOrder(int number)
+    public async Task PopulateOrder(int number)
     {
         for (int i = 0; i < number; i++) {
             var newOrder = new Order();
@@ -112,12 +112,12 @@ public class PopulateService : Service
         await _context.SaveChangesAsync();
     }
 
-    public async Task DemorbulateEmployee()
+    public async Task DepopulateEmployee()
     {
         await _context.Employees.RemoveAll();
         await _context.SaveChangesAsync();
     }
-    public async Task MorbulateEmployees(int number)
+    public async Task PopulateEmployees(int number)
     {
         var infos = await GenerateRandomInfosRange<PeopleDto>(
             "https://api.namefake.com/english-united-states/", 
@@ -137,6 +137,24 @@ public class PopulateService : Service
             newEmployee.StartDate = newEmployee.StartDate.AddDays(Random.Shared.Next(-2000, 0));
 
             _context.Employees.Add(newEmployee);
+        }
+
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DepopulateShop() {
+        await _context.Shop.RemoveAll();
+        await _context.SaveChangesAsync();
+    }
+    public async Task PopulateShop(int number) {
+        for (int i = 0; i < number; i++) {
+            var shop = new Shop {
+                Address = $"{Random.Shared.Next(1, 123)}, {Random.Shared.Next(1, 12)} street, district {Random.Shared.Next(1, 12)}, HCM city",
+                EstablishedSince = DateTime.Now.AddDays(-Random.Shared.Next(1, 3000)),
+                Phone = $"(+{Random.Shared.Next(1, 99)}){Random.Shared.Next(10, 99)}-{Random.Shared.Next(100, 999)}-{Random.Shared.Next(1000, 9999)}"
+            };
+
+            _context.Add(shop);
         }
 
         await _context.SaveChangesAsync();
