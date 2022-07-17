@@ -9,7 +9,6 @@ namespace WebAPI.Data.Models;
 
 public class Customer : Person
 {
-    [Column(TypeName = "date")]
     public DateTime RegisterSince { get; set; } = DateTime.Today;
     public uint Point { get; set; }
 

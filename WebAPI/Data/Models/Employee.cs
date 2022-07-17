@@ -16,4 +16,5 @@ public class Employee : Person
 
     // Navigation Properties
     public Shop WorkPlace { get; set; } = null!;
+    public ICollection<Order> Orders { get; set; } = new List<Order>();
 }

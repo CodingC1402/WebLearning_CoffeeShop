@@ -21,11 +21,11 @@ public abstract class PersonValidator<T> : AbstractValidator<T> where T : Person
             .MaximumLength(128).WithMessage(NAME_MAX_LENGTH_ERROR)
             .Matches(@"^[^!-@[-_{-}]+$").WithMessage(NAME_INVALID_CHARACTER_ERROR);
         RuleFor(x => x.Gender).IsInEnum().WithMessage(GENDER_ERROR);
-        RuleFor(x => x.DOB).GreaterThan(DateTime.Today.AddYears(130));
+        RuleFor(x => x.DOB).GreaterThan(DateTime.Today.AddYears(-130));
         RuleFor(x => x.Email)
             .EmailAddress();
         RuleFor(x => x.PhoneNumber)
-            .Matches(@"/^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/gm")
+            .Matches(@"^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$")
                 .WithMessage(PHONE_INVALID_PHONE_ERROR);
     }
 }

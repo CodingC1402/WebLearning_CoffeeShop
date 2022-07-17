@@ -20,11 +20,7 @@ builder.Services.AddControllers().AddNewtonsoftJson().Services
     .AddHttpClient()
 
 // Add services to the container.
-    .AddScoped<OrderService>()
-    .AddScoped<CustomerService>()
-    .AddScoped<EmployeeService>()
-    .AddScoped<CoffeeService>()
-    .AddScoped<ShopService>()
+    .AddScoped<JwtService>()
     .AddScoped<PopulateService>()
 
     .AddScoped<IValidator<Employee>, EmployeeValidator>()

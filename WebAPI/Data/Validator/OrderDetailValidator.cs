@@ -9,6 +9,9 @@ namespace WebAPI.Data.Validator
 {
     public class OrderDetailValidator : AbstractValidator<OrderDetail>
     {
-        
+        public OrderDetailValidator()
+        {
+            RuleFor(x => x.Count).LessThan(100).GreaterThan(0);
+        }
     }
 }

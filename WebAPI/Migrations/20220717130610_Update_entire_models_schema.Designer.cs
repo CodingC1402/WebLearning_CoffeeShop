@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAPI.Data;
 
@@ -10,9 +11,10 @@ using WebAPI.Data;
 namespace WebAPI.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    partial class ShopContextModelSnapshot : ModelSnapshot
+    [Migration("20220717130610_Update_entire_models_schema")]
+    partial class Update_entire_models_schema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,30 +29,22 @@ namespace WebAPI.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .IsUnicode(true)
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Notes")
                         .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Origin")
                         .IsRequired()
-                        .HasMaxLength(128)
-                        .IsUnicode(true)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("longtext");
 
                     b.Property<decimal>("Price")
-                        .HasPrecision(4, 2)
-                        .HasColumnType("decimal(4,2)");
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<string>("Variety")
                         .IsRequired()
-                        .HasMaxLength(128)
-                        .IsUnicode(true)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -67,15 +61,14 @@ namespace WebAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DOB")
-                        .HasColumnType("Date");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
                         .HasColumnType("longtext");
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
@@ -88,7 +81,7 @@ namespace WebAPI.Migrations
                         .HasColumnType("int unsigned");
 
                     b.Property<DateTime>("RegisterSince")
-                        .HasColumnType("Date");
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -109,8 +102,7 @@ namespace WebAPI.Migrations
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
@@ -120,13 +112,13 @@ namespace WebAPI.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<DateTime?>("ResignDate")
-                        .HasColumnType("Date");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("ShopId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("Date");
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
@@ -191,16 +183,14 @@ namespace WebAPI.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("EstablishedSince")
-                        .HasColumnType("Date");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasMaxLength(22)
-                        .HasColumnType("varchar(22)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 

@@ -12,5 +12,6 @@ namespace WebAPI.Data.Models
         public DateTime EstablishedSince { get; set; } = DateTime.Now;
 
         public ICollection<Employee> Staffs { get; set; } = new List<Employee>();
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

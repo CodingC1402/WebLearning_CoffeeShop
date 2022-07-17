@@ -10,16 +10,20 @@ namespace WebAPI.Utilities.Extensions
 {
     public static class DbSetExtension
     {
-        public static async Task RemoveRange<T>(this DbSet<T> @this, Expression<Func<T, bool>> expression) where T : class {
-            @this.RemoveRange(await @this.Where(expression).ToArrayAsync());
+        public static void RemoveRange<T>(this DbSet<T> @this, Expression<Func<T, bool>> expression) where T : class {
+            @this.RemoveRange(@this.Where(expression));
         }
 
-        public static async Task RemoveAll<T>(this DbSet<T> @this) where T : class {
-            @this.RemoveRange(await @this.ToArrayAsync());
+        public static void RemoveAll<T>(this DbSet<T> @this) where T : class {
+            @this.RemoveRange(@this);
         }
 
-        public static async Task<T> FindById<T>(this DbSet<T> @this, int id) where T : Model {
-            return await @this.Where(x => x.Id == id).SingleAsync();
+        public static IQueryable<T> FindById<T> (this DbSet<T> @this, int id) where T : Model {
+            return @this.Where(x => x.Id == id);
+        }
+
+        public static void RemoveById<T>(this DbSet<T> @this, int id) where T : Model {
+            @this.RemoveRange(@this.FindById(id));
         }
 
         public static async Task<T> GetRandomEntity<T>(this DbSet<T> @this) where T : class {

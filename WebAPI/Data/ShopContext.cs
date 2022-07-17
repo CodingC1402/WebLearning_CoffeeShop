@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using WebAPI.Data.Configs;
 using WebAPI.Data.Models;
 
 namespace WebAPI.Data
@@ -27,11 +28,17 @@ namespace WebAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<OrderDetail>().HasKey(detail => new {detail.OrderId, detail.CoffeeId});
-            
-            modelBuilder.Entity<Coffee>().HasIndex(coffee => coffee.Name).IsUnique(true);
-            modelBuilder.Entity<Employee>()
-                .Property(x => x.DOB).HasColumnType("Date");
+            modelBuilder.ApplyConfiguration(new CoffeeConfig());
+            modelBuilder.ApplyConfiguration(new CustomerConfig());
+            modelBuilder.ApplyConfiguration(new EmployeeConfig());
+            modelBuilder.ApplyConfiguration(new OrderConfig());
+            modelBuilder.ApplyConfiguration(new OrderDetailsConfig());
+            modelBuilder.ApplyConfiguration(new ShopConfig());
+
+            //modelBuilder.Entity<Order>()
+            //    .Property(x => x.Total)
+            //    .ValueGeneratedOnAddOrUpdate()
+            //    .HasComputedColumnSql(@"select sum(OrderDetails.Count * Coffees.Price) from `OrderDetails` inner join `Coffees` on OrderDetails.CoffeeId = Coffees.Id where OrderId = `Id`", true);
         }
     }
 }

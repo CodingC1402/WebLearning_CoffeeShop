@@ -20,7 +20,7 @@ public class PopulateService : Service
         => (_context, _httpClientFactory) = (context, httpClientFactory);
 
     public async Task DepopulateCustomer() {
-        await _context.Customers.RemoveAll();
+        _context.Customers.RemoveAll();
         await _context.SaveChangesAsync();
     }
     public async Task PopulateCustomer(int number)
@@ -38,8 +38,8 @@ public class PopulateService : Service
                 Email = info.Email,
                 PhoneNumber = info.Phone,
                 DOB = info.DOB,
-                Gender = info.Gender == "female" ? Person.GenderType.Female : Person.GenderType.Male,
-                Point = ((uint)Random.Shared.Next(0, 3000))
+                Gender = info.Gender == "Female" ? Person.GenderType.Female : Person.GenderType.Male,
+                Point = (uint)Random.Shared.Next(0, 3000)
             };
             newCustomer.RegisterSince = newCustomer.RegisterSince.AddDays(Random.Shared.Next(-2000, 0));
 
@@ -51,7 +51,7 @@ public class PopulateService : Service
 
     public async Task DepopulateCoffee()
     {
-        await _context.Coffees.RemoveAll();
+        _context.Coffees.RemoveAll();
         await _context.SaveChangesAsync();
     }
     public async Task PopulateCoffee(int number)
@@ -80,17 +80,19 @@ public class PopulateService : Service
 
     public async Task DepopulateOrder()
     {
-        await _context.Orders.RemoveAll();
+        _context.Orders.RemoveAll();
         await _context.SaveChangesAsync();
     }
     public async Task PopulateOrder(int number)
     {
+        var createdOrders = new List<Order>(number);
         for (int i = 0; i < number; i++) {
             var newOrder = new Order();
             var count = Random.Shared.Next(1, 5);
 
-            newOrder.Customer = (await _context.Customers.GetRandomEntity());
-            newOrder.Employee = (await _context.Employees.GetRandomEntity());
+            newOrder.Customer = await _context.Customers.GetRandomEntity();
+            newOrder.Employee = await _context.Employees.GetRandomEntity();
+            newOrder.Shop = await _context.Shop.GetRandomEntity();
             newOrder.Details = new List<OrderDetail>(count);
             for (int j = 0; j < count; j++) {
                 var coffee = await _context.Coffees.GetRandomEntity();
@@ -107,14 +109,20 @@ public class PopulateService : Service
             }
 
             _context.Orders.Add(newOrder);
+            createdOrders.Add(newOrder);
         }
 
+        await _context.SaveChangesAsync();
+
+        foreach (var order in createdOrders) {
+            await order.ComputeTotal(_context);
+        }
         await _context.SaveChangesAsync();
     }
 
     public async Task DepopulateEmployee()
     {
-        await _context.Employees.RemoveAll();
+        _context.Employees.RemoveAll();
         await _context.SaveChangesAsync();
     }
     public async Task PopulateEmployees(int number)
@@ -133,6 +141,7 @@ public class PopulateService : Service
                 PhoneNumber = info.Phone,
                 DOB = info.DOB,
                 Gender = info.Gender == "female" ? Person.GenderType.Female : Person.GenderType.Male,
+                WorkPlace = await _context.Shop.GetRandomEntity()
             };
             newEmployee.StartDate = newEmployee.StartDate.AddDays(Random.Shared.Next(-2000, 0));
 
@@ -143,7 +152,7 @@ public class PopulateService : Service
     }
 
     public async Task DepopulateShop() {
-        await _context.Shop.RemoveAll();
+        _context.Shop.RemoveAll();
         await _context.SaveChangesAsync();
     }
     public async Task PopulateShop(int number) {
