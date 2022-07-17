@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using FluentValidation;
 using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -44,7 +45,7 @@ public abstract class ApiControllerBase<TModel> : ControllerBase where TModel : 
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add(
+    public virtual async Task<IActionResult> Add(
         [FromBody] TModel model, 
         [FromServices] IValidator<TModel> validator) 
     {
@@ -54,14 +55,14 @@ public abstract class ApiControllerBase<TModel> : ControllerBase where TModel : 
             await Context.SaveChangesAsync();
 
             return Created(new Uri(Request.GetDisplayUrl() + model.Id), model);
-        } catch (ValidationException) {
-            return BadRequest();
+        } catch (ValidationException e) {
+            return BadRequest(e.Message);
         }
 
     }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update(
+    public virtual async Task<IActionResult> Update(
         [FromRoute] int id,
         [FromBody] TModel model, 
         [FromServices] IValidator<TModel> validator) 
@@ -80,13 +81,13 @@ public abstract class ApiControllerBase<TModel> : ControllerBase where TModel : 
                 return NoContent();
             }
         } catch (ValidationException e) {
-            return BadRequest(e.ToString());
+            return BadRequest(e.Message);
         } catch (DBConcurrencyException e) {
             return Conflict(e.ToString());
         }
     }
     [HttpPut]
-    public async Task<IActionResult> UpdateRange(
+    public virtual async Task<IActionResult> UpdateRange(
         [FromBody] TModel[] models, 
         [FromServices] IValidator<TModel> validator) 
     {
@@ -109,13 +110,13 @@ public abstract class ApiControllerBase<TModel> : ControllerBase where TModel : 
 
             return NoContent();
         } catch (ValidationException e) {
-            return BadRequest(e.ToString());
+            return BadRequest(e.Message);
         } catch (DBConcurrencyException e) {
             return Conflict(e.ToString());
         }
     }
     [HttpDelete("{id:int}")]
-    public async Task<IActionResult> Delete([FromRoute] int id) {
+    public virtual async Task<IActionResult> Delete([FromRoute] int id) {
         try {
             var entity = await DataSet.FindById(id).SingleAsync();
             DataSet.Remove(entity);
@@ -127,7 +128,7 @@ public abstract class ApiControllerBase<TModel> : ControllerBase where TModel : 
         }
     }
     [HttpDelete]
-    public async Task<IActionResult> DeleteRange([FromBody] int[] idArr) {
+    public virtual async Task<IActionResult> DeleteRange([FromBody] int[] idArr) {
         foreach (var id in idArr) {
             var result = await Delete(id);
             if (result.GetType() == typeof(NotFoundObjectResult)) {
@@ -137,5 +138,26 @@ public abstract class ApiControllerBase<TModel> : ControllerBase where TModel : 
 
         await Context.SaveChangesAsync();
         return NoContent();
+    }
+
+    [HttpPatch("{id:int}")]
+    public virtual async Task<IActionResult> Patch(
+        [FromRoute] int id,
+        [FromBody] JsonPatchDocument<TModel> patchDocument,
+        [FromServices] IValidator<TModel> validator) 
+    {
+        try {
+            var entity = await DataSet.FindById(id).SingleAsync();
+            patchDocument.ApplyTo(entity);
+            
+            await validator.ValidateAndThrowAsync(entity);
+            await Context.SaveChangesAsync();
+            
+            return Ok(entity);
+        } catch (InvalidOperationException) {
+            return NotFound();
+        } catch (ValidationException e) {
+            return BadRequest($"Malformed patch document for {typeof(TModel).Name}! Reasons: \n{e.Message}");
+        }
     }
 }

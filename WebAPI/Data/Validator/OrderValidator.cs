@@ -12,6 +12,7 @@ namespace WebAPI.Data.Validator
         public OrderValidator()
         {
             RuleFor(x => x.Total).ScalePrecision(2, 4);
+            RuleFor(x => x.Details).NotEmpty();
         }
     }
 }
