@@ -8,9 +8,9 @@ using WebAPI.Services;
 namespace WebAPI.Controllers
 {
     [Route("[controller]")]
-    public class MorbulateController : ApiControllerBase<MorbulateService>
+    public class MorbulateController : ApiControllerBase<PopulateService>
     {
-        public MorbulateController(MorbulateService service) : base(service) 
+        public MorbulateController(PopulateService service) : base(service) 
         {}
 
         [HttpPost("customer")]

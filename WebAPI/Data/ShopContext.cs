@@ -12,18 +12,17 @@ namespace WebAPI.Data
         // Bad move to a key vault or something else later;
         public const string CONNECTION_STRING = "server=127.0.0.1;database=coffee_shop;user=root;password=password";
 
-        public DbSet<Customer> Customers => Set<Customer>();
-        public DbSet<Coffee> Coffees => Set<Coffee>();
-        public DbSet<Employee> Employees => Set<Employee>();
-        public DbSet<Order> Orders => Set<Order>();
-        public DbSet<OrderDetail> OrderDetails => Set<OrderDetail>();
+        public DbSet<Customer> Customers { get; set; } = null!;
+        public DbSet<Coffee> Coffees { get; set; } = null!;
+        public DbSet<Employee> Employees { get; set; } = null!;
+        public DbSet<Order> Orders { get; set; } = null!;
+        public DbSet<OrderDetail> OrderDetails { get; set; } = null!;
+        public DbSet<Shop> Shop { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                .UseMySql(CONNECTION_STRING, ServerVersion.AutoDetect(CONNECTION_STRING))
-                .UseValidationCheckConstraints()
-                .UseEnumCheckConstraints();
+                .UseMySql(CONNECTION_STRING, ServerVersion.AutoDetect(CONNECTION_STRING));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -32,8 +31,7 @@ namespace WebAPI.Data
             
             modelBuilder.Entity<Coffee>().HasIndex(coffee => coffee.Name).IsUnique(true);
             modelBuilder.Entity<Employee>()
-                .HasCheckConstraint("CK_Employee_StartResign", "`ResignDate` IS NULL OR `StartDate` < `ResignDate`")
-                .HasCheckConstraint("CK_Employee_StartDOB", "`StartDate` > `DOB`");
+                .Property(x => x.DOB).HasColumnType("Date");
         }
     }
 }

@@ -3,32 +3,25 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using WebAPI.Data;
 using WebAPI.Data.Models;
-using WebAPI.Data.Repos;
 using WebAPI.DTOs.RandomInfoAPI;
+using WebAPI.Utilities.Extensions;
 
 namespace WebAPI.Services;
 
-public class MorbulateService : Service
+public class PopulateService : Service
 {
-    private readonly IHttpClientFactory s_httpClientFactory;
-    private readonly CustomerRepo _customers;
-    private readonly EmployeeRepo _employees;
-    private readonly CoffeeRepo _coffees;
-    private readonly OrderRepo _orders;
+    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly ShopContext _context;
 
-    public MorbulateService(
-        IHttpClientFactory httpClientFactory,
-        CustomerRepo customers,
-        EmployeeRepo employees,
-        CoffeeRepo furniture,
-        OrderRepo orders)
-        => (s_httpClientFactory, _customers, _employees, _coffees, _orders)
-        = (httpClientFactory, customers, employees, furniture, orders);
+    public PopulateService(ShopContext context, IHttpClientFactory httpClientFactory)
+        => (_context, _httpClientFactory) = (context, httpClientFactory);
 
     public async Task DemorbulateCustomer() {
-        await _customers.DeleteRange(e => true);
-        await _customers.Save();
+        await _context.Customers.RemoveAll();
+        await _context.SaveChangesAsync();
     }
     public async Task MorbulateCustomer(int number)
     {
@@ -45,21 +38,21 @@ public class MorbulateService : Service
                 Email = info.Email,
                 PhoneNumber = info.Phone,
                 DOB = info.DOB,
-                Gender = info.Gender,
+                Gender = info.Gender == "female" ? Person.GenderType.Female : Person.GenderType.Male,
                 Point = ((uint)Random.Shared.Next(0, 3000))
             };
             newCustomer.RegisterSince = newCustomer.RegisterSince.AddDays(Random.Shared.Next(-2000, 0));
 
-            _customers.Add(newCustomer);
+            _context.Customers.Add(newCustomer);
         }
 
-        await _customers.Save();
+        await _context.SaveChangesAsync();
     }
 
     public async Task DemorbulateCoffee()
     {
-        await _coffees.DeleteRange(e => true);
-        await _coffees.Save();
+        await _context.Coffees.RemoveAll();
+        await _context.SaveChangesAsync();
     }
     public async Task MorbulateCoffee(int number)
     {
@@ -79,16 +72,16 @@ public class MorbulateService : Service
                 Price = Random.Shared.Next(20, 250) / 23M
             };
 
-            _coffees.Add(newCoffee);
+            _context.Coffees.Add(newCoffee);
         }
 
-        await _coffees.Save();
+        await _context.SaveChangesAsync();
     }
 
     public async Task DemorbulateOrder()
     {
-        await _orders.DeleteRange(e => true);
-        await _orders.Save();
+        await _context.Orders.RemoveAll();
+        await _context.SaveChangesAsync();
     }
     public async Task MorbulateOrder(int number)
     {
@@ -96,11 +89,11 @@ public class MorbulateService : Service
             var newOrder = new Order();
             var count = Random.Shared.Next(1, 5);
 
-            newOrder.Customer = (await _customers.GetRandomCustomer());
-            newOrder.Employee = (await _employees.GetRandomEmployee());
+            newOrder.Customer = (await _context.Customers.GetRandomEntity());
+            newOrder.Employee = (await _context.Employees.GetRandomEntity());
             newOrder.Details = new List<OrderDetail>(count);
             for (int j = 0; j < count; j++) {
-                var coffee = await _coffees.GetRandomCoffee();
+                var coffee = await _context.Coffees.GetRandomEntity();
                 var existDetail = newOrder.Details.FirstOrDefault(o => o.Coffee == coffee);
                 if (existDetail != null) {
                     existDetail.Count += Random.Shared.Next(1, 2);
@@ -113,16 +106,16 @@ public class MorbulateService : Service
                 }
             }
 
-            _orders.Add(newOrder);
+            _context.Orders.Add(newOrder);
         }
 
-        await _orders.Save();
+        await _context.SaveChangesAsync();
     }
 
     public async Task DemorbulateEmployee()
     {
-        await _employees.DeleteRange(e => true);
-        await _employees.Save();
+        await _context.Employees.RemoveAll();
+        await _context.SaveChangesAsync();
     }
     public async Task MorbulateEmployees(int number)
     {
@@ -139,14 +132,14 @@ public class MorbulateService : Service
                 Email = info.Email,
                 PhoneNumber = info.Phone,
                 DOB = info.DOB,
-                Gender = info.Gender,
+                Gender = info.Gender == "female" ? Person.GenderType.Female : Person.GenderType.Male,
             };
             newEmployee.StartDate = newEmployee.StartDate.AddDays(Random.Shared.Next(-2000, 0));
 
-            _employees.Add(newEmployee);
+            _context.Employees.Add(newEmployee);
         }
 
-        await _employees.Save();
+        await _context.SaveChangesAsync();
     }
 
 
@@ -164,7 +157,7 @@ public class MorbulateService : Service
 
         try
         {
-            using var httpClient = s_httpClientFactory.CreateClient();
+            using var httpClient = _httpClientFactory.CreateClient();
             var response = await httpClient.GetAsync(urlModifier(url));
 
             if (!response.IsSuccessStatusCode)

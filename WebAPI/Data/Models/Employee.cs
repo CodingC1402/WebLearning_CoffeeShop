@@ -10,20 +10,10 @@ namespace WebAPI.Data.Models;
 
 public class Employee : Person
 {
-    public enum RoleType {
-        Admin,
-        Manager,
-        Employee
-    }
-
-    [Column(TypeName = "date")]
     public DateTime StartDate { get; set; } = DateTime.Today;
-    [Column(TypeName = "date")]
     public DateTime? ResignDate { get; set; }
-    public int? ManagerId { get; set; }
+    public int ShopId { get; set; }
 
-    public string? RefreshToken { get; set; }
     // Navigation Properties
-    public ICollection<Employee>? ManagingEmployees { get; set; }
-    public Employee? Manager { get; set; }
+    public Shop WorkPlace { get; set; } = null!;
 }

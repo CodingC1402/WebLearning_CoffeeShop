@@ -29,7 +29,7 @@ builder.Services.AddControllers().AddNewtonsoftJson().Services
     .AddScoped<CustomerService>()
     .AddScoped<EmployeeService>()
     .AddScoped<CoffeeService>()
-    .AddScoped<MorbulateService>()
+    .AddScoped<PopulateService>()
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     .AddEndpointsApiExplorer()

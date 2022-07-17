@@ -2,14 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using WebAPI.Data;
 using WebAPI.Data.Models;
-using WebAPI.Data.Repos;
 
 namespace WebAPI.Services;
 
-public class CustomerService : Service<CustomerRepo, Customer>
+public class CustomerService : Service<Customer, ShopContext>
 {
-    public CustomerService(CustomerRepo repository) : base(repository)
-    {
-    }
+    protected override DbSet<Customer> Data => Context.Customers;
+    public CustomerService(ShopContext context) : base(context)
+    {}
+
 }
