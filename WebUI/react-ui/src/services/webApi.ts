@@ -28,7 +28,7 @@ webApi.interceptors.response.use((res) => {
 function recursiveConvertToDayJS(obj: any) {
     const date = dayjs(obj, 'YYYY-MM-DDTHH:mm:ss', true);
     if (date.isValid()) {
-        return date;
+        return new Date(date.toISOString());
     }
 
     if (Array.isArray(obj)) {

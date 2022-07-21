@@ -1,9 +1,11 @@
-import { Dayjs } from 'dayjs';
-import { useState } from 'react'
+import dayjs, { Dayjs } from 'dayjs';
+import { useEffect, useState } from 'react'
 import Table from '../components/Table';
 import Employee from '../models/employee';
 import { deleteEmployeeData, fetchEmployeeData } from '../services/employeeService';
 import { usePageName } from '../utils/extraHook';
+import { keyOf } from '../utils/extraObjectUtils';
+import { formatDate } from '../utils/formatter';
 import './Employees.css'
 
 type EmployeesProps = {
@@ -14,22 +16,28 @@ const Employees = (props: EmployeesProps) => {
   usePageName(props.name);
   const [employees, setEmployees] = useState<Employee[]>([]);
 
-  fetchEmployeeData().then((data) => {
-    if (data)
-      setEmployees(data);
-  })
+  useEffect(() => {
+    fetchEmployeeData().then((data) => {
+      if (data)
+        setEmployees(data);
+    })
+  }, [])
 
   return (
     <div id='employee-top-div' className='p-3'>
       <Table 
         key={'data-table'}
         maxHeight='calc(100vh - 230px)'
-        displayProps={['fullName', 'phoneNumber', 'email', 'startDate', 'shopId']}
+        displayProps={[
+          keyOf(Employee, 'fullName'), 
+          keyOf(Employee, 'phoneNumber'), 
+          keyOf(Employee, 'email'),
+          keyOf(Employee, 'startDate'),
+          keyOf(Employee, 'shopId'),
+        ]}
         displayNames={['Name', 'Phone', 'Email', 'Start since', 'Shop id']}
         displayWidths={[1, 1, 2, 1, 1]}
-        displayConverters={[null, null, null, (v: Dayjs) => {
-          return v.format('DD/MM/YYYY');
-        }]}
+        displayConverters={[null, null, null, formatDate]}
         indexWidth={'50px'}
         commandWidth={'150px'}
         data={employees}

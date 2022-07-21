@@ -1,18 +1,17 @@
-import { Dayjs } from "dayjs";
 import Person, { GenderType } from "./person";
 
 export default class Employee extends Person {
     constructor(
         public id: number,
         public fullName: string,
-        public DOB: Dayjs,
+        public dob: Date,
         public phoneNumber: string,
         public gender: GenderType,
-        public startDate: Dayjs,
+        public startDate: Date,
         public shopId: number,
-        public resignDate?: Dayjs,
+        public resignDate?: Date,
         public email?: string
     ) {
-        super(id, fullName, DOB, phoneNumber, gender, email);
+        super(id, fullName, dob, phoneNumber, gender, email);
     }
 }

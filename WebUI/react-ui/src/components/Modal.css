@@ -1,11 +1,16 @@
 .modal {
-    background-color: #38383850;
+    background-color: #28282888;
 }
 .modal-fade-in {
-    animation: fading 0.25s;
+    animation: fading 0.25s forwards;
 }
 .modal-fade-out {
-    animation: fadingOut 0.25s;
+    animation: fadingOut 0.25s forwards;
+}
+.modal-body {
+    max-height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 @keyframes fading {

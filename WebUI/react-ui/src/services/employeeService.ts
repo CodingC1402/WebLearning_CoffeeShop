@@ -12,7 +12,7 @@ export async function fetchEmployeeData() {
 
 export async function deleteEmployeeData(id: number) {
     try {
-        await webApi.delete<undefined>(getUrl(HostController.EMPLOYEE) + `/${id}`);
+        await webApi.delete<undefined>(getUrl(HostController.EMPLOYEE) + `${id}`);
     } catch (err) {
         console.error(err);
     }

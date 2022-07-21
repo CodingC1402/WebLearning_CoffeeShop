@@ -1,4 +1,3 @@
-import { Dayjs } from "dayjs";
 import { Model } from "./model";
 
 export enum GenderType {
@@ -11,7 +10,7 @@ export default class Person extends Model {
     constructor(
         public id: number,
         public fullName: string,
-        public DOB: Dayjs,
+        public dob: Date,
         public phoneNumber: string,
         public gender: GenderType,
         public email?: string
