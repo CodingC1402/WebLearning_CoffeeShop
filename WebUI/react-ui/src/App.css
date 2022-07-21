@@ -1,0 +1,66 @@
+.brand-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.brand-item {
+    display: flex;
+    flex-direction: row;
+    height: 65px;
+    font-size: 18px;
+}
+
+.drawer {
+    display: flex;
+    flex-direction: column;
+    width: 270px;
+    height: 100%;
+    background-color: #383838;
+}
+
+.drawer-div {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.drawer-footer {
+    background-color: #484848;
+    height: 40px;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    text-decoration: none;
+}
+.drawer-footer:hover {
+    color: white;
+}
+
+.drawer-outlet {
+    flex-grow: 1;
+}
+
+.drawer-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.drawer-link {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+.drawer-link:hover {
+    color:white;
+}
+
+.drawer-navbar {
+    background-color: #383838;
+    height: 65px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    display: grid;
+    flex-direction: column;
+}

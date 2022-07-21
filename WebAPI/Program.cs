@@ -11,11 +11,15 @@ using WebAPI.Data.Models;
 using WebAPI.Data.Validator;
 using WebAPI.Services;
 
+const string MyCORSPolicyName = "_myCORSPolicy";
+
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 
 // Add services to the container.
-builder.Services.AddControllers().AddNewtonsoftJson().Services
+builder.Services
+    .AddControllers()
+    .AddNewtonsoftJson().Services
     .AddDbContext<DbContext, ShopContext>()
     .AddHttpClient()
 
@@ -32,6 +36,15 @@ builder.Services.AddControllers().AddNewtonsoftJson().Services
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     .AddEndpointsApiExplorer()
     .AddSwaggerGen()
+    .AddCors(options => {
+        options.AddPolicy(MyCORSPolicyName, policy => {
+            policy
+                .WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+        });
+    })
 
     .AddAuthentication(options =>
     {
@@ -69,6 +82,8 @@ builder.Services.AddControllers().AddNewtonsoftJson().Services
     }
 
 app.UseHttpsRedirection();
+
+app.UseCors(MyCORSPolicyName);
 
 app.UseAuthentication();
 app.UseAuthorization();

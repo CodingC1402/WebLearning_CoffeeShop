@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{011A408D-8F2F-44B2-B1D1-9686F820F1FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "WebUI\WebUI.csproj", "{946FA875-2CF4-43CA-A6DB-3B283B62FCFE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,9 +18,5 @@ Global
 		{011A408D-8F2F-44B2-B1D1-9686F820F1FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{011A408D-8F2F-44B2-B1D1-9686F820F1FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{011A408D-8F2F-44B2-B1D1-9686F820F1FE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{946FA875-2CF4-43CA-A6DB-3B283B62FCFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{946FA875-2CF4-43CA-A6DB-3B283B62FCFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{946FA875-2CF4-43CA-A6DB-3B283B62FCFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{946FA875-2CF4-43CA-A6DB-3B283B62FCFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

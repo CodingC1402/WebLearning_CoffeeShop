@@ -1,0 +1,28 @@
+#coffee-img {
+    height: 150px;
+    width: auto;
+    align-self: center;
+}
+
+#coffee-card {
+    display: flex;
+    padding-left: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    box-shadow: 5px 5px 20px rgba(88, 88, 88, 0.459);
+    flex-direction: column;
+    height: 400px;
+    width: 250px;
+}
+
+#coffee-body {
+    word-wrap: normal;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#coffee-title {
+    font-weight: bold;
+}

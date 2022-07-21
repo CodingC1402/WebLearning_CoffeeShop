@@ -1,0 +1,11 @@
+.list-group-item {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.drawer-icon {
+    width: 24px;
+    height: 24px;
+    color: white;
+}
