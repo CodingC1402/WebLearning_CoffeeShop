@@ -1,6 +1,4 @@
-import { AxiosResponse } from "axios";
-import dayjs, { Dayjs } from "dayjs";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Table from "../components/Table";
 import CustomerForm from "../forms/CustomerForm";
 import Customer from "../models/customer";
