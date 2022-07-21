@@ -25,7 +25,6 @@ const CustomerForm = (
     formState: { errors },
   } = formHook;
 
-  console.log(formatDate(props.customer ? props.customer.dob : new Date(), 'YYYY-MM-DD'));
   return (
     <Modal
       {...props}

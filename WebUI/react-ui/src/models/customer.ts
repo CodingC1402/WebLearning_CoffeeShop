@@ -38,7 +38,7 @@ export const CustomerSchema = yup.object({
   registerSince: yup
     .date()
     .required("Register date is required")
-    .when("DOB", (dob, schema) => {
+    .when("dob", (dob, schema) => {
       schema.min(dob);
       return schema;
     }),

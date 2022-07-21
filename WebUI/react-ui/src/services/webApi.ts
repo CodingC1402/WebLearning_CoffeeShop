@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios, { AxiosResponseTransformer } from "axios"
 import dayjs from "dayjs";
 var customParseFormat = require('dayjs/plugin/customParseFormat')
 dayjs.extend(customParseFormat)
@@ -17,34 +17,29 @@ export function getUrl(controller: HostController, action?: string): string {
 }
 
 export const webApi = axios.create({
-    
+    transformResponse: [transformResponse, ...(axios.defaults.transformResponse as AxiosResponseTransformer[])],
 });
 
-webApi.interceptors.response.use((res) => {
-    recursiveConvertToDayJS(res.data);
-    return res;
-})
-
-function recursiveConvertToDayJS(obj: any) {
-    const date = dayjs(obj, 'YYYY-MM-DDTHH:mm:ss', true);
+function transformResponse(data: any) {
+    const date = dayjs(data, 'YYYY-MM-DDTHH:mm:ss', true);
     if (date.isValid()) {
         return new Date(date.toISOString());
     }
 
-    if (Array.isArray(obj)) {
-        const arr = obj as Array<any>;
+    if (Array.isArray(data)) {
+        const arr = data as Array<any>;
         arr.forEach((element, index) => {
-            arr[index] = recursiveConvertToDayJS(element);
+            arr[index] = transformResponse(element);
         });
-        return obj;
+        return data;
     }
 
-    if (obj instanceof Object) {
-        const keys = Object.keys(obj);
+    if (data instanceof Object) {
+        const keys = Object.keys(data);
         keys.forEach((key) => {
-            obj[key] = recursiveConvertToDayJS(obj[key]);
+            data[key] = transformResponse(data[key]);
         })
     }
 
-    return obj;
+    return data;
 }

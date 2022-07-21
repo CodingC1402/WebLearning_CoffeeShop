@@ -1,11 +1,14 @@
+import { AxiosResponse } from "axios";
 import dayjs, { Dayjs } from "dayjs";
 import React, { useEffect, useState } from "react";
 import Table from "../components/Table";
 import CustomerForm from "../forms/CustomerForm";
 import Customer from "../models/customer";
 import {
+  addCustomerData,
   deleteCustomerData,
   fetchCustomerData,
+  updateCustomerData,
 } from "../services/customerService";
 import { usePageName } from "../utils/extraHook";
 import { formatDate } from "../utils/formatter";
@@ -25,6 +28,24 @@ const Customers = (props: Props) => {
       if (data) setCustomers(data);
     });
   }, []);
+
+  const updateCustomer = (customer: any) => {
+    updateCustomerData(customer, updatingObject!.id).then(() => {
+      setCustomers((arr) => {
+        const index = arr.indexOf(updatingObject!);
+        arr[index] = Object.assign(updatingObject!, customer);
+
+        return arr;
+      });
+    }).catch((err) => {
+      console.error(err);
+    });
+  }
+  const addCustomer = (customer: any) => {
+    addCustomerData(customer).then(data => {
+      setCustomers((arr) => arr.concat(data));
+    });
+  }
 
   return (
     <div id="employee-top-div" className="p-3">
@@ -63,7 +84,10 @@ const Customers = (props: Props) => {
         }}
       />
       <div key={"buttons"} id="button-div">
-        <button type="button" className="btn btn-success btn-add">
+        <button type="button" className="btn btn-success btn-add" onClick={() => {
+          setUpdatingObject(undefined);
+          setShowForm(true);
+        }}>
           Add customer
         </button>
       </div>
@@ -71,10 +95,8 @@ const Customers = (props: Props) => {
       {showForm ? (
         <CustomerForm
           customer={updatingObject}
-          title={<div className="text-center w-100">Customer {"Action"}</div>}
-          onSubmit={(data) => {
-            console.log(data);
-          }}
+          title={`Customer ${updatingObject ? "update" : "add"}`}
+          onSubmit={updatingObject ? updateCustomer : addCustomer}
           onClose={function (): void {
             setShowForm(false);
           }}
