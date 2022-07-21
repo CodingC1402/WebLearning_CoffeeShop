@@ -1,0 +1,18 @@
+.modal {
+    background-color: #38383850;
+}
+.modal-fade-in {
+    animation: fading 0.25s;
+}
+.modal-fade-out {
+    animation: fadingOut 0.25s;
+}
+
+@keyframes fading {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+@keyframes fadingOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}

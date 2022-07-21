@@ -4,6 +4,7 @@
         "Depopulated",
         "Hasher",
         "HMACSHA",
-        "Newtonsoft"
+        "Newtonsoft",
+        "snek"
     ]
 }
