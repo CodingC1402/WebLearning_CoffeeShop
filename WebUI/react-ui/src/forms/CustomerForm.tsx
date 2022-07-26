@@ -37,6 +37,7 @@ const CustomerForm = (
       <FormControl
         label="Full name"
         key={"full-name"}
+        required={true}
         defaultValue={props.customer ? props.customer.fullName : ""}
         register={register('fullName')}
         error={errors.fullName}
@@ -45,6 +46,7 @@ const CustomerForm = (
       <FormControl
         label="Date of birth"
         key={"dob"}
+        required={true}
         defaultValue={formatDate(props.customer ? props.customer.dob : new Date(), 'YYYY-MM-DD')}
         register={register('dob')}
         error={errors.dob}
@@ -53,6 +55,7 @@ const CustomerForm = (
       <FormControl
         label="Email"
         key={"email"}
+        required={true}
         defaultValue={props.customer ? props.customer.email || "" : ""}
         register={register('email')}
         error={errors.email}
@@ -61,6 +64,7 @@ const CustomerForm = (
       <FormControl
         label="Phone number"
         key={"phone-number"}
+        required={true}
         defaultValue={props.customer ? props.customer.phoneNumber : ""}
         register={register('phoneNumber')}
         error={errors.phoneNumber}
@@ -69,6 +73,7 @@ const CustomerForm = (
       <FormControl
         label="Register since"
         key={"register-since"}
+        required={true}
         defaultValue={formatDate(props.customer ? props.customer.registerSince : new Date(), 'YYYY-MM-DD')}
         register={register('registerSince')}
         error={errors.registerSince}
@@ -77,6 +82,7 @@ const CustomerForm = (
       <FormControl
         label="Point"
         key={"point"}
+        required={true}
         defaultValue={props.customer ? props.customer.point.toString() : "0"}
         register={register('point')}
         error={errors.point}

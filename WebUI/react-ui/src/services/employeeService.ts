@@ -2,18 +2,19 @@ import Employee from "../models/employee";
 import { getUrl, HostController, webApi } from "./webApi";
 
 export async function fetchEmployeeData() {
-    try {
-        let res = await webApi.get<Employee[]>(getUrl(HostController.EMPLOYEE));
-        return res.data;
-    } catch (err) {
-        console.error(err);
-    }
+    let res = await webApi.get<Employee[]>(getUrl(HostController.EMPLOYEE));
+    return res.data;
+}
+
+export async function updateEmployeeData(employee: Employee, id: number) {
+    await webApi.put(getUrl(HostController.EMPLOYEE) + id, {...employee, id: id});
+}
+
+export async function addEmployeeData(employee: Employee) {
+    let res = await webApi.post(getUrl(HostController.EMPLOYEE), employee);
+    return res.data;
 }
 
 export async function deleteEmployeeData(id: number) {
-    try {
-        await webApi.delete<undefined>(getUrl(HostController.EMPLOYEE) + `${id}`);
-    } catch (err) {
-        console.error(err);
-    }
+    await webApi.delete<undefined>(getUrl(HostController.EMPLOYEE) + `${id}`);
 }

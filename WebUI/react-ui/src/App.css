@@ -43,6 +43,7 @@
 .drawer-content {
     flex-grow: 1;
     display: flex;
+    max-width: calc(100vw - 270px);
     flex-direction: column;
 }
 

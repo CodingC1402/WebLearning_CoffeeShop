@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CoffeeItem from '../components/CoffeeItem';
+import Coffee from '../models/coffee';
+import { fetchCoffeeData } from '../services/coffeeService';
 import { usePageName } from '../utils/extraHook';
+import './Coffees.css'
 
 type CoffeesProps = {
   name: string;
@@ -8,10 +11,21 @@ type CoffeesProps = {
 
 const Coffees = (props: CoffeesProps) => {
   usePageName(props.name);
+  const [coffee, setCoffee] = useState<Coffee[]>([]);
+
+  useEffect(() => {
+    fetchCoffeeData().then((data) => {
+      if (data) setCoffee(data);
+    });
+  }, []);
 
   return (
-    <div className='h-100 d-flex flex-wrap'>
-      <CoffeeItem name={'Brazil'} origins={'Hokaido Sergay'} varieties={'Compuchino Americano shito'} notes={'Blend roast something'} price={10.999929} ></CoffeeItem>
+    <div id="coffee-div" className='h-100'>
+      <div className='d-flex flex-wrap justify-content-center'>
+        {coffee.map((data) => {
+          return <CoffeeItem key={data.id} name={data.name} origins={data.origin} varieties={data.origin} notes={data.notes} price={data.price}/>
+        })}
+      </div>
     </div>
   )
 }

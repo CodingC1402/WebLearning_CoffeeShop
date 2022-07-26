@@ -1,0 +1,7 @@
+#coffee-div {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: calc(100vh - 65px);
+    background-image: url(../resources/images/chalk-board.jpg);
+    background-size: cover;
+}
